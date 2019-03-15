@@ -24,6 +24,7 @@ export default {
     display: flex
     justify-content: space-between
     border:1px solid black
+    background: #fff
     .index-btn
       width: 25%
       height: .8rem

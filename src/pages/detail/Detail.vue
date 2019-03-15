@@ -1,7 +1,7 @@
 <template>
   <div class="detail">
     <header>
-      <span><img src="@/assets/icos/back@2x.png" alt=""></span>
+      <span @click='back'><img src="@/assets/icos/back@2x.png" alt=""></span>
       <span><img src="@/assets/icos/more@2x.png" alt=""></span>
     </header>
     <detail-swiper></detail-swiper>
@@ -96,6 +96,11 @@ export default{
   name: 'Detail',
   components: {
     DetailSwiper: DetailSWiper
+  },
+  methods: {
+    back: function () {
+      this.$router.push('/classify')
+    }
   }
 }
 </script>
