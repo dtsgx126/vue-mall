@@ -99,21 +99,25 @@
           <input class="ok" type="checkbox">
           <i class="bgImg"></i><span>全选</span>
         </div>
-      <div class="btn del">删除</div>
+      <div class="btn del" @click='toBuy'>去结算</div>
     </footer>
   </div>
 </template>
 <script>
 import '@/assets/styles/iconfont.css'
 export default{
-  name: 'IndexHome'
+  name: 'IndexHome',
+  methods: {
+    toBuy () {
+      this.$router.push('/checkout')
+    }
+  }
 }
 </script>
 <style lang='stylus' scoped>
 @import '~styles/varibles.styl'
 .cart
   background: #eee
-
   header
     background: #fff
     display: flex

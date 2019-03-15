@@ -9,6 +9,7 @@ import Classify from '@/pages/Index/components/Classify/Classify'
 import Area from '@/pages/Index/components/Classify/components/Area'
 import Area1 from '@/pages/Index/components/Classify/components/Area1'
 import Detail from '@/pages/detail/Detail'
+import Checkout from '@/pages/checkout/Checkout'
 
 import IndexCart from '@/pages/Index/components/Cart/Cart'
 import CartDetail from '@/pages/Index/components/Cart/components/Detail'
@@ -69,6 +70,9 @@ export default new Router({
       path: '/detail',
       component: Detail,
       name: 'Detail'
+    },{
+      path: '/checkout',
+      component: Checkout
     }
 
 
