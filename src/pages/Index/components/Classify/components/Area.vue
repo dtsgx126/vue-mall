@@ -76,19 +76,20 @@ export default{
 }
 </script>
 <style lang='stylus' scoped>
+@import '~styles/varibles.styl'
 .wrapper
   position: absolute
-  left: 2rem
   right: 0
-  top: 10vw
-  bottom: .8rem
+  top: 13vw
+  bottom: $footerHeight
   overflow: hidden
+  width: 78.4vw
   .wrap
     display: flex
     flex-direction: column
     justify-content: space-between
     align-items: center
-
+    width: 100%
     .title-img
       width: 80%
       img

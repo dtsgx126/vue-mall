@@ -25,12 +25,14 @@ export default {
     justify-content: space-between
     border:1px solid black
     background: #fff
+    box-sizing:border-box
     .index-btn
       width: 25%
-      height: .8rem
-      line-height: .8rem
+      height: 11.8vw
+      line-height: 11.8vw
       text-align: center
       border-left:1px solid black
+      box-sizing:border-box
     .index-btn:first-child
       border: none
 </style>
