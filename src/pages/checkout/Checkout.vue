@@ -1,7 +1,7 @@
 <template>
   <div class="checkout">
     <header class="border-bottom">
-      <span class="edit"><img src="@/assets/icos/back@2x.png" alt=""></span>
+      <span class="edit" @click='back'><img src="@/assets/icos/back@2x.png" alt=""></span>
       <span>结算</span>
       <span class="edit"></span>
     </header>
@@ -98,7 +98,7 @@ export default{
   name: 'Checkout',
   methods: {
     back: function () {
-      this.$router.push('/classify')
+      this.$router.push('/cart')
     }
   }
 }

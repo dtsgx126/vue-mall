@@ -84,7 +84,7 @@
       <div class="btn-buy">
         <div class="btn cart">购物车</div>
         <div class="btn add">加入购物车</div>
-        <div class="btn buy">付款</div>
+        <div class="btn buy" @click='buy'>付款</div>
       </div>
     </div>
   </div>
@@ -100,6 +100,9 @@ export default{
   methods: {
     back: function () {
       this.$router.push('/classify')
+    },
+    buy: function () {
+      this.$router.push('/checkout')
     }
   }
 }
