@@ -7,53 +7,73 @@
         </div>
         <div class="info">------羊奶粉------</div>
         <div class="ico-wrap">
-            <router-link to='/detail' class="img-wrap" v-on:click="seeDetail">
-              <img class="ico" src="@/assets/timg.jpg" alt="">
-            </router-link>
+            <div class="img-wrap"
+                 @click='seeDetail(item)'
+                 v-for='item of shopList'
+                 :key='item.id'
+            >
+              <img class="ico" :src="item.goodsPic" alt="">
+              <span>{{item.goodsName}}</span>
+            </div>
             <div class="img-wrap" @click='seeDetail'>
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>美赞臣</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>美赞臣</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>美赞臣</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
             <div class="img-wrap" @click="seeDetail">
               <img class="ico" src="@/assets/timg.jpg" alt="">
+              <span>伊利金宝贝</span>
             </div>
         </div>
       </div>
@@ -63,11 +83,19 @@
 <script>
 import Bscroll from 'better-scroll'
 import '@/assets/styles/iconfont.css'
+import { mapGetters } from 'vuex'
 export default{
   name: 'Area',
+  computed:{
+    shopList () {
+      console.log(this.$store.getter)
+      return this.$store.getters.getShopList
+    }
+  },
   methods: {
-    seeDetail: function () {
-      this.$router.push('/cart')
+    seeDetail: function (item) {
+      this.$router.push({ path:'/detail' ,query:{item:item}})
+      // this.$router.push('/detail')
     }
   },
   mounted: function () {
@@ -106,10 +134,21 @@ export default{
         float: left
         padding-bottom: .5rem
         padding-top: .5rem
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: space-between
+        color: gray
+        font-size: 12px
+        span
+          text-align: center
         img
           width: 11.1vw
           display: block
           margin:0 auto
+          margin-bottom: 3vw
+
+
 
 
 </style>

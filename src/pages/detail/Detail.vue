@@ -10,9 +10,9 @@
       <span class="border">立即查看</span>
     </div>
     <div class="info">
-      <p class="info-title">合生元(BIOSTIME)超级婴儿呵护配方奶粉</p>
+      <p class="info-title">{{item.goodsName}}</p>
       <p class="info-center">1段900g 法国原灌进口(0-6个月)</p>
-      <p class="info-money">$414.00</p>
+      <p class="info-money">￥{{item.price}}</p>
     </div>
     <div class="choose">
       <span class="title">已选</span>
@@ -49,13 +49,12 @@
           </div>
           过水的鱼
         </div>
-
         <p class="rating-info">试了一下，感觉很棒，下次还会光顾！</p>
         <div class="img-wrap">
           <img src="" alt="">
         </div>
         <p class="answer">
-          <span>官方回复:&#32</span>感谢您的回复，祝您生活愉快！
+          <span>官方回复:&#32;</span>感谢您的回复，祝您生活愉快！
         </p>
       </div>
       <div class="rating-content">
@@ -72,7 +71,7 @@
           <img src="" alt="">
         </div>
         <p class="answer">
-          <span>官方回复:&#32</span>感谢您的回复，祝您生活愉快！
+          <span>官方回复:&#32;</span>感谢您的回复，祝您生活愉快！
         </p>
       </div>
     </div>
@@ -83,8 +82,8 @@
       </div>
       <div class="btn-buy">
         <div class="btn cart">购物车</div>
-        <div class="btn add">加入购物车</div>
-        <div class="btn buy" @click='buy'>付款</div>
+        <div class="btn add" @click='addToCart(item)'>加入购物车</div>
+        <div class="btn buy">付款</div>
       </div>
     </div>
   </div>
@@ -92,12 +91,19 @@
 <script>
 import DetailSWiper from '@/pages/detail/components/Swiper'
 import '@/assets/styles/iconfont.css'
+import {mapActions} from 'vuex'
 export default{
   name: 'Detail',
   components: {
     DetailSwiper: DetailSWiper
   },
+  data: function () {
+    return {
+      item: this.$route.query.item
+    }
+  },
   methods: {
+    ...mapActions(['addToCart']),
     back: function () {
       this.$router.push('/classify')
     },
