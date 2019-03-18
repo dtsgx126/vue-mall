@@ -107,7 +107,9 @@ export default{
         padding-bottom: .5rem
         padding-top: .5rem
         img
-          width: 100%
+          width: 11.1vw
+          display: block
+          margin:0 auto
 
 
 </style>

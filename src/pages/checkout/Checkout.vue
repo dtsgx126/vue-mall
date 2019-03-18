@@ -219,8 +219,7 @@ export default{
     align-items: center
     padding:.1rem $rightEdge .1rem $leftIndent
     .img-info
-      width: 1rem
-      height: 1rem
+      width: 8vw
   .total
     background:#fff
     margin-top: .2rem

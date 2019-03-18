@@ -112,6 +112,8 @@ export default{
 @import '~styles/varibles.styl'
 .detail
   background: #eee
+  padding-bottom: 15vw
+  position: relative
   header
     background: #fff
     display: flex
@@ -229,8 +231,12 @@ export default{
           color: orange
   .footer
     background: #fff
-    margin-top: 2px
-
+    /*margin-top: 2px*/
+    position: fixed
+    left: 0
+    bottom: 0
+    right: 0
+    border-top:1px solid #ddd
     .btn-detail
       display: flex
       padding-top: .1rem

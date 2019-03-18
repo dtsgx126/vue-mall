@@ -39,9 +39,10 @@
       <img src="@/assets/icos/broadcast@2x.png" alt="">羊奶传奇APP即将上线
     </div>
     <div class="hots">
-      <div class="swiper border-right">
+      <!-- <div class="swiper border-right">
         轮播
-      </div>
+      </div> -->
+      <hot-swiper class="swiper border-right"></hot-swiper>
       <div class="right">
         <div class="hot border-bottom">
           <p class="title">限制抢购</p>
@@ -141,10 +142,12 @@
 <script>
 import '@/assets/styles/iconfont.css'
 import HomeSwiper from './components/HomeSwiper'
+import HotSwiper from './components/HotSwiper'
 export default{
   name: 'IndexHome',
   components: {
     HomeSwiper,
+    HotSwiper
   }
 }
 </script>
@@ -281,6 +284,8 @@ export default{
         height: 18.9vw
         img
           height: 100%
+          display: block
+          margin:0 auto
       .name
         font-size: 10px
         text-align: center

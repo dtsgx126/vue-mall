@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from '@/pages/Index/Index'
 
 import IndexHome from '@/pages/Index/components/Home/Home'
-import HomeDetail from '@/pages/Index/components/Home/components/Detail'
+// import HomeDetail from '@/pages/Index/components/Home/components/Detail'
 
 import Classify from '@/pages/Index/components/Classify/Classify'
 import Area from '@/pages/Index/components/Classify/components/Area'
@@ -52,10 +52,6 @@ export default new Router({
           path: 'mine',
           name: 'IndexMine',
           component: IndexMine
-        },{
-          path: 'home/detail',
-          name: 'HomeDetail',
-          component: HomeDetail
         },{
           path: 'cart/detail',
           name: 'CartDetail',

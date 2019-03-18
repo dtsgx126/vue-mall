@@ -33,7 +33,7 @@
           <i class="bgImg"></i>
         </div>
         <div class="img-wrap">
-          <img src="@/assets/timg.jpg" alt="">
+          <img src="@/assets/timg (4).jpg" alt="">
         </div>
         <div class="shop-info">
           <p>美素力(frisolac)金装婴儿配方奶粉 1段 (0-6个月婴儿适用)</p>
@@ -56,7 +56,7 @@
           <i class="bgImg"></i>
         </div>
         <div class="img-wrap">
-          <img src="@/assets/timg.jpg" alt="">
+          <img src="@/assets/timg (3).jpg" alt="">
         </div>
         <div class="shop-info">
           <p>美素力(frisolac)金装婴儿配方奶粉 1段 (0-6个月婴儿适用)</p>
@@ -77,7 +77,7 @@
           <i class="bgImg"></i>
         </div>
         <div class="img-wrap">
-          <img src="@/assets/timg.jpg" alt="">
+          <img src="@/assets/detail.jpg" alt="">
         </div>
         <div class="shop-info">
           <p>美素力(frisolac)金装婴儿配方奶粉 1段 (0-6个月婴儿适用)</p>
@@ -145,13 +145,16 @@ export default{
       padding:$leftEdge
       .img-wrap
         width: 2rem
-        hegiht: 1rem
+        hegiht: 2.3rem
         border:1px solid gray
         overflow: hidden
         margin-right: .2rem
+
         img
           height: 2rem
-          width: 100%
+          margin:0 auto
+          display: block
+          /*width: 100%*/
       .shop-info
         flex: 1
         display: flex
