@@ -32,10 +32,6 @@ const getters ={
     return state.add.map(({id,num})=>{
       let product = state.shop_list.find(n => n.id == id);
       if(product){
-        console.log({
-          ...product,
-          num
-        })
         return{
           ...product,
           num
@@ -63,7 +59,6 @@ const getters ={
 const actions={
   //加入购物车
   addToCart ({commit},product) {
-    console.log(product)
     commit('addCart',{
       id:product.id
     })
@@ -71,6 +66,12 @@ const actions={
   //购物车中减去一个
   reduceToCart({commit},product){
     commit('reduceCart',{
+      id:product.id
+    })
+  },
+  //自定义购物车数量
+  customToCart({commit},product){
+    commit('customCart',{
       id:product.id
     })
   },
@@ -106,6 +107,19 @@ const mutations ={
       })
     }else{
       record.num--;
+    }
+  },
+  //自定义数量
+  customCart(state,{id,num}){
+    console.log('aaa')
+    let record = state.add.find(n => n.id == id);
+    if(!record){
+      state.add.push({
+        id,
+        num:1
+      })
+    }else{
+      record.num = num;
     }
   },
   //删除单个物品

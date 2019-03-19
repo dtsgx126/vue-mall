@@ -6,23 +6,23 @@
       <span class="edit">编辑</span>
     </header>
     <div class="content">
-      <div class="info-wrap border-bottom">
+      <div class="info-wrap border-bottom" v-for='item of cartData' :key='item.id'>
         <div class="ok-box">
           <input class="ok" type="checkbox">
           <i class="bgImg"></i>
         </div>
         <div class="img-wrap">
-          <img src="@/assets/timg.jpg" alt="">
+          <img :src="item.goodsPic" alt="">
         </div>
         <div class="shop-info">
-          <p>美素力(frisolac)金装婴儿配方奶粉 1段 (0-6个月婴儿适用)</p>
+          <p>{{item.goodsName}}</p>
           <p class="spec">规格：900克(荷兰原装进口)</p>
           <div class="choose">
-            <span class="money">¥259.00</span>
+            <span class="money">¥{{item.price}}</span>
             <div class="btns-buy">
-              <span class="btn-less">-</span>
-              <input type="text" value="1">
-              <span class="btn-more">+</span>
+              <button class="btn-less" @click='reduceToCart(item)' :disabled="!(item.num-1)">-</button>
+              <input type="number" min="1" :value="item.num" @input='customToCart(item,$event)'>
+              <span class="btn-more" @click='addToCart(item)'>+</span>
             </div>
           </div>
         </div>
@@ -98,19 +98,39 @@
       <div class="btn allBuy ok-box">
           <input class="ok" type="checkbox">
           <i class="bgImg"></i><span>全选</span>
-        </div>
+          <span>不含运费 合计:￥{{this.totalPrice}}</span>
+      </div>
       <div class="btn del" @click='toBuy'>去结算</div>
     </footer>
   </div>
 </template>
 <script>
 import '@/assets/styles/iconfont.css'
+import { mapGetters , mapActions } from 'vuex'
 export default{
   name: 'IndexHome',
+  computed: {
+    ...mapGetters({
+      cartData:'addShopList',
+      totalPrice: 'totalPrice',
+    })
+  },
   methods: {
     toBuy () {
       this.$router.push('/checkout')
-    }
+    },
+    customToCart(item,$event) {
+      if ($event.target.value <= 0) {
+        alert('请输入正确的数字')
+      }
+      console.log($event)
+      item.num = $event.target.value
+      this.$store.commit('customCart',item)
+    },
+    ...mapActions({
+      addToCart: 'addToCart',
+      reduceToCart: 'reduceToCart'
+    })
   }
 }
 </script>

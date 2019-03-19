@@ -81,9 +81,9 @@
         <div class="btn right">参数</div>
       </div>
       <div class="btn-buy">
-        <div class="btn cart">购物车</div>
+        <div class="btn cart" @click='goCart'>购物车</div>
         <div class="btn add" @click='addToCart(item)'>加入购物车</div>
-        <div class="btn buy">付款</div>
+        <div class="btn buy" @click='buy'>付款</div>
       </div>
     </div>
   </div>
@@ -109,6 +109,9 @@ export default{
     },
     buy: function () {
       this.$router.push('/checkout')
+    },
+    goCart: function () {
+      this.$router.push('/cart')
     }
   }
 }
@@ -269,13 +272,5 @@ export default{
       .buy
         width: 35%
         background: red
-
-
-
-
-
-
-
-
 
 </style>
