@@ -82,9 +82,12 @@
       </div>
       <div class="btn-buy">
         <div class="btn cart" @click='goCart'>购物车</div>
-        <div class="btn add" @click='addToCart(item)'>加入购物车</div>
+        <div class="btn add" @click='addToCart(item);dialog()'>加入购物车</div>
         <div class="btn buy" @click='buy'>付款</div>
       </div>
+    </div>
+    <div class="dialog-wrap" v-show="isShow">
+      成功添加到购物车
     </div>
   </div>
 </template>
@@ -99,10 +102,20 @@ export default{
   },
   data: function () {
     return {
-      item: this.$route.query.item
+      item: this.$route.query.item,
+      isShow: false
     }
   },
   methods: {
+    dialog () {
+      this.isShow = true
+      // addToCart(item)
+      var that= this
+      setTimeout(function () {
+
+        that.isShow = false
+      },1000)
+    },
     ...mapActions(['addToCart']),
     back: function () {
       this.$router.push('/classify')
@@ -273,4 +286,18 @@ export default{
         width: 35%
         background: red
 
+  .dialog-wrap
+    position: fixed
+    left: 50%
+    top: 50%
+    transform : translate(-50%,-50%)
+    background: black
+    color: #fff
+    width: 40vw
+    height: 20vw
+    line-height: 20vw
+    text-align: center
+    border-radius: 5px
+    opacity: 0.7
+    z-index:100
 </style>

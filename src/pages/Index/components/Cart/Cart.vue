@@ -8,7 +8,7 @@
     <div class="content">
       <div class="info-wrap border-bottom" v-for='item of cartData' :key='item.id'>
         <div class="ok-box">
-          <input class="ok" type="checkbox">
+          <input :checked="isSelect" class="ok" type="checkbox" @click="noAll">
           <i class="bgImg"></i>
         </div>
         <div class="img-wrap">
@@ -22,72 +22,7 @@
             <div class="btns-buy">
               <button class="btn-less" @click='reduceToCart(item)' :disabled="!(item.num-1)">-</button>
               <input type="number" min="1" :value="item.num" @input='customToCart(item,$event)'>
-              <span class="btn-more" @click='addToCart(item)'>+</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="info-wrap border-bottom">
-        <div class="ok-box">
-          <input class="ok" type="checkbox">
-          <i class="bgImg"></i>
-        </div>
-        <div class="img-wrap">
-          <img src="@/assets/timg (4).jpg" alt="">
-        </div>
-        <div class="shop-info">
-          <p>美素力(frisolac)金装婴儿配方奶粉 1段 (0-6个月婴儿适用)</p>
-          <p class="spec">规格：900克(荷兰原装进口)</p>
-          <div class="choose">
-            <span class="money">¥259.00</span>
-            <div class="btns-buy">
-              <span class="btn-less">-</span>
-              <input type="text" value="1">
-              <span class="btn-more">+</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="content">
-      <div class="info-wrap border-bottom">
-        <div class="ok-box">
-          <input class="ok" type="checkbox">
-          <i class="bgImg"></i>
-        </div>
-        <div class="img-wrap">
-          <img src="@/assets/timg (3).jpg" alt="">
-        </div>
-        <div class="shop-info">
-          <p>美素力(frisolac)金装婴儿配方奶粉 1段 (0-6个月婴儿适用)</p>
-          <p class="spec">规格：900克(荷兰原装进口)</p>
-          <div class="choose">
-            <span class="money">¥259.00</span>
-            <div class="btns-buy">
-              <span class="btn-less">-</span>
-              <input type="text" value="1">
-              <span class="btn-more">+</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="info-wrap border-bottom">
-        <div class="ok-box">
-          <input class="ok" type="checkbox">
-          <i class="bgImg"></i>
-        </div>
-        <div class="img-wrap">
-          <img src="@/assets/detail.jpg" alt="">
-        </div>
-        <div class="shop-info">
-          <p>美素力(frisolac)金装婴儿配方奶粉 1段 (0-6个月婴儿适用)</p>
-          <p class="spec">规格：900克(荷兰原装进口)</p>
-          <div class="choose">
-            <span class="money">¥259.00</span>
-            <div class="btns-buy">
-              <span class="btn-less">-</span>
-              <input type="text" value="1">
-              <span class="btn-more">+</span>
+              <button class="btn-more" @click='addToCart(item)'>+</button>
             </div>
           </div>
         </div>
@@ -96,8 +31,8 @@
     <div class="content"></div>
     <footer class="border-top">
       <div class="btn allBuy ok-box">
-          <input class="ok" type="checkbox">
-          <i class="bgImg"></i><span>全选</span>
+          <input class="ok" type="checkbox" @click="test" :checked="isAll">
+          <i class="bgImg"></i><span >全选</span>
           <span>不含运费 合计:￥{{this.totalPrice}}</span>
       </div>
       <div class="btn del" @click='toBuy'>去结算</div>
@@ -109,6 +44,17 @@ import '@/assets/styles/iconfont.css'
 import { mapGetters , mapActions } from 'vuex'
 export default{
   name: 'IndexHome',
+  data () {
+    return {
+      isSelect: false,
+      isAll: false
+    }
+  },
+  watch: {
+    isSelect: function () {
+      console.log(this.isSelect)
+    }
+  },
   computed: {
     ...mapGetters({
       cartData:'addShopList',
@@ -116,6 +62,15 @@ export default{
     })
   },
   methods: {
+    test () {
+      this.isSelect = !this.isSelect
+      this.isAll = true
+      this.isSelect = true
+      console.log(this.isSelect)
+    },
+    noAll () {
+      this.isAll = false
+    },
     toBuy () {
       this.$router.push('/checkout')
     },
@@ -201,12 +156,16 @@ export default{
             align-items: flex-end
             justify-content: center
             .btn-less,.btn-more
-              border:1px solid gray
+
               height:.5rem
-              line-height: .5rem
+              line-height : .5rem
               width: .4rem
               text-align: center
               font-size: .5rem
+              background: #fff
+              box-sizing border-box
+              vertical-align: middle
+              border:1px solid gray
             input
               width: 1rem
               height: .5rem
@@ -214,6 +173,8 @@ export default{
               text-align: center
               border-left: none
               border-right: none
+              display: inline-block
+              box-sizing: border-box
   .ok-box
         min-width: .5rem
         min-height: .5rem
