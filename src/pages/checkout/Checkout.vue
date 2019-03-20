@@ -69,33 +69,34 @@
       </div>
     </div>
     <div class="shopping-wrap">
-      <div class="info">
-        <img class="img-info" src="@/assets/timg.jpg" alt="">
-        <span>美素佳儿妈妈 孕产妇配方奶粉</span>
-        <span>×1</span>
-        <span>288元</span>
-      </div>
-      <div class="info">
-        <img class="img-info" src="@/assets/timg.jpg" alt="">
-        <span>美素佳儿妈妈 孕产妇配方奶粉</span>
-        <span>×1</span>
-        <span>288元</span>
+      <div class="info" v-for="item of cartData" :key="item.id">
+        <img class="img-info" :src="item.goodsPic" alt="">
+        <span>{{item.goodsName}}</span>
+        <span>×{{item.num}}</span>
+        <span>{{item.price}}元</span>
       </div>
     </div>
     <div class="total">
-      <div class="price">商品价格：576元</div>
+      <div class="price">商品价格：{{totalPrice}}元</div>
       <div class="cost">配送费用: 0元</div>
     </div>
     <footer>
-      <div class="btn money">应付金额:576元</div>
+      <div class="btn money">应付金额:{{totalPrice}}元</div>
       <div class="btn go-pay">去付款</div>
     </footer>
   </div>
 </template>
 <script>
 import '@/assets/styles/iconfont.css'
+import {mapGetters} from 'vuex'
 export default{
   name: 'Checkout',
+  computed:{
+    ...mapGetters({
+      cartData:'addShopList',
+      totalPrice: 'totalPrice',
+    })
+  },
   methods: {
     back: function () {
       this.$router.push('/cart')

@@ -79,6 +79,10 @@ const actions={
   clearToCart({commit}){
     commit('clearCart')
   },
+  //删除选中物品
+  deletToShops({commit},products){
+    commit('deletShops',products)
+  },
   //删除单个物品
   deletToShop({commit},product){
     commit('deletShop',product)
@@ -122,6 +126,17 @@ const mutations ={
       record.num = num;
     }
   },
+  //删除选中商品
+  deletShops(state,products){
+    for (let i = 0; i < products.length ; i++) {
+      state.add.forEach((item,j)=>{
+        if(item.id == products[i].id){
+          state.add.splice(j,1)
+        }
+      })
+    }
+
+  },
   //删除单个物品
   deletShop(state,product){
     state.add.forEach((item,i)=>{
@@ -133,6 +148,10 @@ const mutations ={
   //清空购物车
   clearCart(state){
     state.add=[];
+  },
+  //结算页重新定义购物车
+  changeCart(state,products) {
+    state.add=products
   }
 }
 export default{

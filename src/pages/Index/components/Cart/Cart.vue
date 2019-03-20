@@ -3,12 +3,14 @@
     <header class="border-bottom">
       <span class="edit"></span>
       <span>购物车</span>
-      <span class="edit">编辑</span>
+      <span class="edit" @click="handleEdit" v-if="!edit">编辑</span>
+      <span class="edit" @click="handleEdit" v-else>完成</span>
     </header>
     <div class="content">
       <div class="info-wrap border-bottom" v-for='item of cartData' :key='item.id'>
         <div class="ok-box">
-          <input :checked="isSelect" class="ok" type="checkbox" @click="noAll">
+          <input v-if="!edit" :checked="isAll" class="ok addcart" type="checkbox" @input="readyAddCart(item,$event)">
+          <input v-else :checked="isSelect" class="ok delcart" type="checkbox" @input="readyDelCart(item,$event)">
           <i class="bgImg"></i>
         </div>
         <div class="img-wrap">
@@ -20,9 +22,12 @@
           <div class="choose">
             <span class="money">¥{{item.price}}</span>
             <div class="btns-buy">
-              <button class="btn-less" @click='reduceToCart(item)' :disabled="!(item.num-1)">-</button>
-              <input type="number" min="1" :value="item.num" @input='customToCart(item,$event)'>
-              <button class="btn-more" @click='addToCart(item)'>+</button>
+              <!--<button class="btn-less" name="reduce" @click='reduceToCart(item)' :disabled="!(item.num-1)">-</button>-->
+              <!--<input type="number" min="1" name="change" :value="item.num" @input='customToCart(item,$event)'>-->
+              <!--<button class="btn-more" name="add" @click='addToCart(item)'>+</button>-->
+              <button class="btn-less" name="reduce" @click='addReduce(item,$event)' :disabled="!(item.num-1)">-</button>
+              <input type="number" min="1" name="change" :value="item.num" @input='addReduce(item,$event)'>
+              <button class="btn-more" name="add" @click='addReduce(item,$event)'>+</button>
             </div>
           </div>
         </div>
@@ -31,11 +36,16 @@
     <div class="content"></div>
     <footer class="border-top">
       <div class="btn allBuy ok-box">
-          <input class="ok" type="checkbox" @click="test" :checked="isAll">
+          <input class="ok" type="checkbox" @click="readyAddCart(cartData,$event)" :checked="isAll">
           <i class="bgImg"></i><span >全选</span>
-          <span>不含运费 合计:￥{{this.totalPrice}}</span>
       </div>
-      <div class="btn del" @click='toBuy'>去结算</div>
+      <div class="del" v-if="edit" @click="deletToShops(readyDel)">删除</div>
+      <div class="to-buy-wrap" v-else>
+        <span>不含运费 合计:￥<span class="money">{{this.newTotalPrice}}</span></span>
+        <div class="btn to-buy" @click='toBuy(readyBuy)'>
+          去结算
+        </div>
+      </div>
     </footer>
   </div>
 </template>
@@ -47,31 +57,91 @@ export default{
   data () {
     return {
       isSelect: false,
-      isAll: false
+      isAll: false,
+      edit: false,
+      readyDel:[],
+      readyBuy:[],
+      price:0
     }
   },
   watch: {
-    isSelect: function () {
-      console.log(this.isSelect)
+    readyBuy: function () {
+      var j=0
+      for (let i= 0; i< this.readyBuy.length; i++) {
+        j+= this.readyBuy[i].num * this.readyBuy[i].price
+      }
+      this.price=j
     }
   },
   computed: {
     ...mapGetters({
       cartData:'addShopList',
       totalPrice: 'totalPrice',
-    })
+    }),
+    newTotalPrice : function () {
+      var j=0
+      for (let i= 0; i< this.readyBuy.length; i++) {
+        j+= this.readyBuy[i].num * this.readyBuy[i].price
+      }
+      return j
+    }
   },
   methods: {
-    test () {
-      this.isSelect = !this.isSelect
-      this.isAll = true
-      this.isSelect = true
-      console.log(this.isSelect)
+    readyDelCart (data,$event) {
+      if ($event.target.checked){
+        this.readyDel.push(data)
+      }else {
+        this.readyDel.splice(
+          this.readyDel.findIndex(item=>item.id===data.id),1
+        )
+      }
+    },
+    addReduce (item,$event) {
+      for(let i=0; i< this.readyBuy.length;i++){
+        if (this.readyBuy[i].id==item.id) {
+          if ($event.target.name=='add'){
+            this.readyBuy[i].num++
+          }else if($event.target.name=='reduce'){
+            this.readyBuy[i].num--
+          }else{
+            this.readyBuy[i].num=$event.target.value
+          }
+
+        }
+      }
+
+
+    },
+    readyAddCart (data,$event) {
+      if(data===this.cartData){
+        this.isAll = !this.isAll
+        if (!$event.target.checked) {
+          this.readyBuy=[]
+          return
+        }
+        var _data= JSON.parse(JSON.stringify(data))
+        this.readyBuy=_data
+        return
+      }
+      if ($event.target.checked){
+        this.readyBuy.push(
+          this.cartData.find(item=>item.id===data.id)
+        )
+      }else {
+
+        for (let i = 0; i < this.readyBuy.length ; i++) {
+          if (this.readyBuy[i].id==data.id) {
+            this.readyBuy.splice(i,1)
+          }
+        }
+      }
     },
     noAll () {
       this.isAll = false
     },
-    toBuy () {
+    toBuy (data) {
+      console.log(data)
+      this.$store.commit('changeCart',data)
       this.$router.push('/checkout')
     },
     customToCart(item,$event) {
@@ -82,9 +152,13 @@ export default{
       item.num = $event.target.value
       this.$store.commit('customCart',item)
     },
+    handleEdit () {
+      this.edit= !this.edit
+    },
     ...mapActions({
       addToCart: 'addToCart',
-      reduceToCart: 'reduceToCart'
+      reduceToCart: 'reduceToCart',
+      deletToShops: 'deletToShops'
     })
   }
 }
@@ -176,32 +250,32 @@ export default{
               display: inline-block
               box-sizing: border-box
   .ok-box
-        min-width: .5rem
-        min-height: .5rem
-        position: relative
-        margin-right: .2rem
-        .ok
-          background: #fff
-          border:1px solid gray
-          border-radius: 50%
-          position: absolute
-          left:0
-          top:0
-          bottom: 0
-          width:.5rem
-          height:.5rem
-          opacity: 0
-        .bgImg
-          width:.5rem
-          height:.5rem
-          display:inline-block
-          border:1px solid gray
-          box-sizing:border-box
-          border-radius:50%
-        .ok:checked ~ .bgImg
-          background: url('../../../../assets/icos/gouxuan@2x.png') no-repeat
-          background-size:.5rem .5rem
-          border:none
+    min-width: .5rem
+    min-height: .5rem
+    position: relative
+    margin-right: .2rem
+    .ok
+      background: #fff
+      border:1px solid gray
+      border-radius: 50%
+      position: absolute
+      left:0
+      top:0
+      bottom: 0
+      width:.5rem
+      height:.5rem
+      opacity: 0
+    .bgImg
+      width:.5rem
+      height:.5rem
+      display:inline-block
+      border:1px solid gray
+      box-sizing:border-box
+      border-radius:50%
+    .ok:checked ~ .bgImg
+      background: url('../../../../assets/icos/gouxuan@2x.png') no-repeat
+      background-size:.5rem .5rem
+      border:none
   footer
     position:fixed
     bottom: $footerHeight
@@ -220,10 +294,25 @@ export default{
       span
         margin-left: .3rem
     .del
-      width: 2rem
+      width: 30vw
       text-align: center
+      line-height : $footerHeight
+      font-size: 20px
+      background: chocolate
       color: #fff
-      background: orange
+    .to-buy-wrap
+      display: flex
+      align-items center
+      font-size: 20px
+      .money
+        color: red
+      .to-buy
+        width: 2rem
+        text-align: center
+        color: #fff
+        background: orange
+        margin-left :10px
+        background:chocolate
 
 
 </style>
