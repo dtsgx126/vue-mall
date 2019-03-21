@@ -12,7 +12,7 @@ const state = {
             "id": "1106103479500709888",
             "createBy": "1000628341250342914",
             "count": 1,
-            "goodsId": "00dff527-dc20-487c-97b2-601e596cf784",
+            "goodsId": "00dff52     7-dc20-487c-97b2-601e596cf784",
             "goodsName": "美赞臣儿童配方奶粉",
             "goodsPic": "//m.360buyimg.com/mobilecms/s750x750_jfs/t17185/322/653273214/137899/2f238ae1/5a9e0519N0f5b5426.jpg!q80.dpg.webp",
             "goodSpec": null,
@@ -28,6 +28,7 @@ const getters ={
     return state.shop_list
   },
   //获取购物车列表
+
   addShopList:state => {
     return state.add.map(({id,num})=>{
       let product = state.shop_list.find(n => n.id == id);
